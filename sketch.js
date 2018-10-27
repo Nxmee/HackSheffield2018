@@ -1,7 +1,6 @@
 ﻿const edge = 20;
 let time;
 let arena = [];
-let colors = ['blue','pink','yellow','orange','red','green','purple'];
 
 function setup() {
     createCanvas(240, 400);
@@ -54,7 +53,7 @@ function drawMatrix(matrix, offset) {
         for (let x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] != 0) {
                 noStroke();
-                fill(colors[matrix[y][x] - 1]);
+                fill(255,255,255);
                 rect((x + offset[0]) * edge, (y + offset[1]) * edge, edge, edge);
             }
         }

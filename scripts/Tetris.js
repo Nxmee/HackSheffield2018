@@ -25,7 +25,7 @@ function Tetris() {
 
     this.process = function() {
         let now = millis();
-        if (now-lastDrop>1000){
+        if (now-lastDrop>500){
             lastDrop = now;
             this.p1.gravity();
             this.p2.gravity();

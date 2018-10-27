@@ -2,6 +2,7 @@ function Piece(owner) {
     this.x = TILES_WIDE/2;
     this.y = -4;
     this.matrix = createMatrix(Math.floor(Math.random() * 7));
+    this.matrixNew = Object.assign([], this.matrix);
     this.owner = owner;
 
     this.collide = function(matrix) {
@@ -66,12 +67,14 @@ function Piece(owner) {
     }
 
     this.rotate = function () {
-        this.matrix.reverse();
-        for (let y = 0; y < this.matrix.length; y++) {
-            for (let x = y + 1; x < this.matrix[y].length; x++) {
-                [this.matrix[y][x], this.matrix[x][y]] = [this.matrix[x][y], this.matrix[y][x]];
+        this.matrixNew.reverse();
+        for (let y = 0; y < this.matrixNew.length; y++) {
+            for (let x = y + 1; x < this.matrixNew[y].length; x++) {
+                [this.matrixNew[y][x], this.matrixNew[x][y]] = [this.matrixNew[x][y], this.matrixNew[y][x]];
             }
         }
+        if this.collide(matrixNew) == 0
+            this.matrix = Object.assign([], this.matrixNew);
     }
 
     this.moveRight = function () {

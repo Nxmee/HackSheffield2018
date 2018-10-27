@@ -4,6 +4,8 @@ function setup() {
     createCanvas(240, 400);
     p1 = new Player();
     p2 = new Player();
+    p1.newPiece();
+    p2.newPiece();
     game = new Tetris(p1,p2);
 }
 

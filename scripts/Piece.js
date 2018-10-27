@@ -1,19 +1,20 @@
-function Piece() {
+function Piece(owner) {
     this.x = 0;
     this.y = 0;
     this.matrix = null;
+    this.owner = owner;
 
     this.reset = function () {
         this.x = (width / edge) / 2 - 1;
         this.y = 0;
         this.matrix = createPiece(Math.floor(Math.random() * 7));
-        Player.pieces.push(this);
+        this.owner.pieceControlled = this;
         if (collide(arena, player)) {
             for (let i = 0; i < arena.length; i++) {
                 arena[i].fill(0);
             }
         }
-        this.updateScore();
+        this.owner.updateScore();
     }
 
     this.rotate = function () {
@@ -42,6 +43,6 @@ function Piece() {
     }
 
     this.release = function () {
-        Player.pieces.pop(this);
+        owner.newPiece();
     }
 }

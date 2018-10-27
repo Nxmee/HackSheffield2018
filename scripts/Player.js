@@ -1,21 +1,27 @@
 function Player() {
     this.score = 0;
-    this.pieces = [];
+    this.pieceControlled = null;
+
+    this.newPiece = function () {
+        this.pieceControlled = new Piece(this);
+        this.pieceControlled.reset();
+    }
 
     this.rotate = function () {
-        this.pieces[pieces.length-1].rotate;
+        this.pieceControlled.rotate;
     }
 
     this.moveLeft = function () {
-        this.pieces[pieces.length-1].moveLeft;
+        this.pieceControlled.moveLeft;
     }
 
     this.moveRight = function () {
-        this.pieces[pieces.length-1].moveRight;
+        this.pieceControlled.moveRight;
     }
 
     this.release = function () {
-        this.pieces[pieces.length-1].release;
+        //this.pieceControlled.release;
+        this.newPiece();
     }
 
     this.updateScore = function () {

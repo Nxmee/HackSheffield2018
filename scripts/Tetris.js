@@ -9,7 +9,6 @@ function Tetris() {
     let lastDrop = millis();
 
     this.render = function() {
-        blendMode(BLEND);
         background(180);
         noStroke();
         //render each side

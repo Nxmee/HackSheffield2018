@@ -13,7 +13,6 @@ function Board(color) {
     }
 
     this.render = function (TILE_SIZE) {
-        blendMode(BLEND);
         fill(this.COLOR);
         rect(this.x, this.y, this.boardWidth, this.boardHeight);
         fill(255-this.COLOR);

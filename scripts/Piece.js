@@ -90,10 +90,6 @@ function Piece(owner) {
         time = millis();
     }
 
-    this.release = function () {
-        owner.newPiece();
-    }
-
     this.gravity = function(){
         this.y++;
         if (this.collide()){

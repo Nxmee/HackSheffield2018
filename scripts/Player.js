@@ -21,7 +21,6 @@ function Player(b) {
     }
 
     this.release = function () {
-        this.pieces.lastChild.release();
         this.newPiece();
     }
 

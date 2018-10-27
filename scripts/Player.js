@@ -8,25 +8,38 @@ function Player(b) {
     };
 
     this.rotate = function () {
-        this.pieces[this.pieces.length-1].rotate();
+        if (this.pieces.length > 0) {
+            this.pieces[this.pieces.length - 1].rotate();
+        }
     };
 
     this.moveLeft = function () {
-        this.pieces[this.pieces.length-1].moveLeft();
+        if (this.pieces.length > 0) {
+            console.log(this.pieces);
+            this.pieces[this.pieces.length - 1].moveLeft();
+        }
     };
 
     this.moveRight = function () {
-        this.pieces[this.pieces.length-1].moveRight();
+        if (this.pieces.length > 0) {
+            this.pieces[this.pieces.length - 1].moveRight();
+        }
     };
 
     this.release = function () {
-        this.newPiece();
+        if (this.pieces.length > 0) {
+            this.newPiece();
+        }
     };
 
     this.gravity = function(){
-        this.pieces.forEach(function(piece){
-            piece.gravity();
-        })
+        if (this.pieces.length > 0) {
+            this.pieces.forEach(function (piece) {
+                if (piece) {
+                    piece.gravity();
+                }
+            })
+        }
     };
 
     this.updateScore = function () {
@@ -34,9 +47,10 @@ function Player(b) {
     };
 
     this.render = function (TILE_SIZE) {
-        blendMode(DIFFERENCE);
         this.pieces.forEach(function(piece){
-           piece.render(TILE_SIZE);
+            if (piece) {
+                piece.render(TILE_SIZE);
+            }
         });
     }
 }

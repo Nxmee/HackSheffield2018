@@ -16,17 +16,6 @@ function Piece() {
         this.updateScore();
     }
 
-    this.drop = function () {
-        this.y++;
-        if (collide(arena, this)) {
-            this.y--; // recovery
-            mergeMatrices(arena, this);
-            arenaSweep()
-            this.reset();
-        }
-        time = millis();
-    }
-
     this.rotate = function () {
         this.matrix.reverse();
         for (let y = 0; y < this.matrix.length; y++) {

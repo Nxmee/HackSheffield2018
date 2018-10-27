@@ -5,7 +5,7 @@ function Player(b) {
 
     this.newPiece = function () {
         this.pieces.push(new Piece(this));
-    };
+    };  
 
     this.rotate = function () {
         this.pieces[this.pieces.length-1].rotate();

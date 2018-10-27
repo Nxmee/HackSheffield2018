@@ -102,7 +102,9 @@ function Piece(owner) {
             this.y++;
         } else if (collisionState == 1) {
             console.log("cell");
-            this.owner.newPiece();
+            if (this == this.owner.pieces[this.owner.pieces.length - 1]) {
+              this.owner.newPiece();
+            }
             this.owner.board.fixPiece(this);
         } else if (collisionState == 3) {
             console.log("Game Over");

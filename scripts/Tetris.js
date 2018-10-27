@@ -11,20 +11,20 @@ function Tetris() {
         }
     }
 
-    this.mergeMatrices = function(arena, player) {
-        for (let y = 0; y < player.matrix.length; y++) {
-            for (let x = 0; x < player.matrix[y].length; x++) {
-                if (player.matrix[y][x] != 0) {
-                    arena[y + player.y][x + player.x] = player.matrix[y][x];
+    this.mergeMatrices = function(arena, piece) {
+        for (let y = 0; y < piece.matrix.length; y++) {
+            for (let x = 0; x < piece.matrix[y].length; x++) {
+                if (piece.matrix[y][x] != 0) {
+                    arena[y + piece.y][x + piece.x] = piece.matrix[y][x];
                 }
             }
         }
     }
 
-    function collide(arena, player) {
-        for (let y = 0; y < player.matrix.length; y++) {
-            for (let x = 0; x < player.matrix[0].length; x++) {
-                if (player.matrix[y][x] != 0 && (arena[y + player.y] && arena[y + player.y][x + player.x]) != 0) {
+    function collide(arena, piece) {
+        for (let y = 0; y < piece.matrix.length; y++) {
+            for (let x = 0; x < piece.matrix[0].length; x++) {
+                if (piece.matrix[y][x] != 0 && (arena[y + piece.y] && arena[y + piece.y][x + piece.x]) != 0) {
                     return true;
                 }
             }

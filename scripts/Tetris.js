@@ -1,8 +1,8 @@
 window.TILES_HIGH = 40;
 window.TILES_WIDE = 10;
 function Tetris() {
-    this.leftBoard = new Board(color(255));
-    this.rightBoard = new Board(color(0));
+    this.leftBoard = new Board(255);
+    this.rightBoard = new Board(0);
     this.p1 = new Player(this.leftBoard);
     this.p2 = new Player(this.rightBoard);
     this.TILE_SIZE;
@@ -13,10 +13,9 @@ function Tetris() {
         background(180);
         noStroke();
         //render each side
-
         //render Boards
-        this.leftBoard.render();
-        this.rightBoard.render();
+        this.leftBoard.render(this.TILE_SIZE);
+        this.rightBoard.render(this.TILE_SIZE);
 
         //render Players
         this.p1.render(this.TILE_SIZE);

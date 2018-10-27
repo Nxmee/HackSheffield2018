@@ -1,5 +1,5 @@
 function Board(color) {
-    const COLOR = color;
+    this.COLOR = color;
 
     //store the initial board dimensions
     this.x;
@@ -12,9 +12,18 @@ function Board(color) {
         this.board[i] = new Array(TILES_HIGH);
     }
 
-    this.render = function () {
-        fill(COLOR);
+    this.render = function (TILE_SIZE) {
+        blendMode(BLEND);
+        fill(this.COLOR);
         rect(this.x, this.y, this.boardWidth, this.boardHeight);
+        fill(255-this.COLOR);
+        for (let i = 0; i < this.board.length; i++) {
+          for (let j = 0; j < this.board[i].length; j++) {
+            if (this.board[i][j] != 0) {
+              rect(this.x+i, this.y+j, TILE_SIZE, TILE_SIZE)
+            }
+          }
+        }
     }
 
     this.updateSize = function (x, y, width, height) {

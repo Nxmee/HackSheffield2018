@@ -36,7 +36,6 @@ function Player(b) {
     };
 
     this.render = function (TILE_SIZE) {
-        blendMode(DIFFERENCE);
         this.pieces.forEach(function(piece){
             if (piece) {
                 piece.render(TILE_SIZE);

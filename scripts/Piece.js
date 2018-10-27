@@ -115,7 +115,10 @@ function Piece(owner) {
     }
 
     this.render = function (TILE_SIZE) {
-        fill(255);
+      let COLOR = this.owner.board.COLOR
+      console.log(COLOR);
+      console.log(255-COLOR);
+        fill(255-COLOR);
         let pieceX = this.owner.board.x + this.x * TILE_SIZE;
         let pieceY = this.owner.board.y + this.y * TILE_SIZE;
         for (let y = 0; y < this.matrix.length; y++) {

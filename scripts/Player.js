@@ -1,38 +1,37 @@
 function Player(b) {
     this.score = 0;
-    this.pieces = [];
+    this.pieces = [new Piece(this)];
     this.board = b;
 
     this.newPiece = function () {
         this.pieces.push(new Piece(this));
-    }
-    this.newPiece();
+    };
 
     this.rotate = function () {
-        this.pieces.lastChild.rotate();
-    }
+        this.pieces[this.pieces.length-1].rotate();
+    };
 
     this.moveLeft = function () {
-        this.pieces.lastChild.moveLeft();
-    }
+        this.pieces[this.pieces.length-1].moveLeft();
+    };
 
     this.moveRight = function () {
-        this.pieces.lastChild.moveRight();
-    }
+        this.pieces[this.pieces.length-1].moveRight();
+    };
 
     this.release = function () {
         this.newPiece();
-    }
+    };
 
     this.gravity = function(){
         this.pieces.forEach(function(piece){
             piece.gravity();
         })
-    }
+    };
 
     this.updateScore = function () {
         document.getElementById("score").innerText = this.score;
-    }
+    };
 
     this.render = function (TILE_SIZE) {
         blendMode(DIFFERENCE);

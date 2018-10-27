@@ -1,30 +1,44 @@
-function Player() {
+function Player(b) {
     this.score = 0;
-    this.pieceControlled = null;
+    this.pieces = [];
+    this.board = b;
 
     this.newPiece = function () {
-        this.pieceControlled = new Piece(this);
-        this.pieceControlled.reset();
+        this.pieces.push(new Piece(this));
     }
+    this.newPiece();
 
     this.rotate = function () {
-        this.pieceControlled.rotate;
+        this.pieces.lastChild.rotate();
     }
 
     this.moveLeft = function () {
-        this.pieceControlled.moveLeft;
+        this.pieces.lastChild.moveLeft();
     }
 
     this.moveRight = function () {
-        this.pieceControlled.moveRight;
+        this.pieces.lastChild.moveRight();
     }
 
     this.release = function () {
-        //this.pieceControlled.release;
+        this.pieces.lastChild.release();
         this.newPiece();
+    }
+
+    this.gravity = function(){
+        this.pieces.forEach(function(piece){
+            piece.gravity();
+        })
     }
 
     this.updateScore = function () {
         document.getElementById("score").innerText = this.score;
+    }
+
+    this.render = function (TILE_SIZE) {
+        blendMode(DIFFERENCE);
+        this.pieces.forEach(function(piece){
+           piece.render(TILE_SIZE);
+        });
     }
 }

@@ -28,7 +28,7 @@ function keyPressed() {
             game.p2.rotate();
             break;
         case DOWN_ARROW:
-            game.p2.release();
+            game.p2.newPiece();
             break;
         case 65: //A
             game.p1.moveLeft();
@@ -40,7 +40,7 @@ function keyPressed() {
             game.p1.rotate();
             break;
         case 83: //S
-            game.p1.release();
+            game.p1.newPiece();
             break;
     }
 }

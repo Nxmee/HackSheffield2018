@@ -19,10 +19,6 @@ function Player(b) {
         this.pieces[this.pieces.length-1].moveRight();
     };
 
-    this.release = function () {
-        this.newPiece();
-    };
-
     this.gravity = function(){
         this.pieces.forEach(function(piece){
             if (piece) {

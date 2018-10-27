@@ -25,7 +25,9 @@ function Player(b) {
 
     this.gravity = function(){
         this.pieces.forEach(function(piece){
-            piece.gravity();
+            if (piece) {
+                piece.gravity();
+            }
         })
     };
 
@@ -35,7 +37,9 @@ function Player(b) {
 
     this.render = function (TILE_SIZE) {
         this.pieces.forEach(function(piece){
-           piece.render(TILE_SIZE);
+            if (piece) {
+                piece.render(TILE_SIZE);
+            }
         });
     }
 }

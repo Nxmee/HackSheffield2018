@@ -1,3 +1,6 @@
+window.TILES_HIGH = 20;
+window.TILES_WIDE = 10;
+
 function Tetris() {
     this.drawMatrix = function(matrix, offset) {
         for (let y = 0; y < matrix.length; y++) {
@@ -21,17 +24,6 @@ function Tetris() {
         }
     }
 
-    function collide(arena, piece) {
-        for (let y = 0; y < piece.matrix.length; y++) {
-            for (let x = 0; x < piece.matrix[0].length; x++) {
-                if (piece.matrix[y][x] != 0 && (arena[y + piece.y] && arena[y + piece.y][x + piece.x]) != 0) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     function arenaSweep() {
         let rowCount = 1;
         for (let y = 0; y < arena.length; y++) {
@@ -48,53 +40,6 @@ function Tetris() {
 
             player.score += 10 * rowCount;
             rowCount *= 2;
-        }
-    }
-
-    function createPiece(type) {
-        switch (type) {
-            case 0:
-                return [
-                    [0, 0, 0],
-                    [1, 1, 1],
-                    [0, 1, 0],
-                ];
-            case 1:
-                return [
-                    [2, 2],
-                    [2, 2],
-                ];
-            case 2:
-                return [
-                    [0, 3, 0],
-                    [0, 3, 0],
-                    [0, 3, 3],
-                ];
-            case 3:
-                return [
-                    [0, 4, 0],
-                    [0, 4, 0],
-                    [4, 4, 0],
-                ];
-            case 4:
-                return [
-                    [0, 5, 0, 0],
-                    [0, 5, 0, 0],
-                    [0, 5, 0, 0],
-                    [0, 5, 0, 0],
-                ];
-            case 5:
-                return [
-                    [0, 6, 6],
-                    [6, 6, 0],
-                    [0, 0, 0],
-                ];
-            case 6:
-                return [
-                    [7, 7, 0],
-                    [0, 7, 7],
-                    [0, 0, 0],
-                ];
         }
     }
 }

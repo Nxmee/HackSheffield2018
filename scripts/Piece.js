@@ -5,7 +5,8 @@ function Piece(owner) {
     this.owner = owner;
 
     this.collide = function (newX, newY, matrix) {
-        matrix = matrix ? matrix : this.matrix;
+        matrix = matrix != null ? matrix : this.matrix;
+        console.log(matrix,this.matrix);
         let board = this.owner.board;
         for (let y = 0; y < matrix.length; y++) {
             let row = matrix[y];
@@ -75,14 +76,8 @@ function Piece(owner) {
     }
 
     this.rotate = function () {
-        let newMatrix = Object.assign([], this.matrix);
-        newMatrix.reverse();
-        for (let y = 0; y < newMatrix.length; y++) {
-            for (let x = y + 1; x < newMatrix[y].length; x++) {
-                [newMatrix[y][x], newMatrix[x][y]] = [newMatrix[x][y], newMatrix[y][x]];
-            }
-        }
-        if (this.collide(newMatrix) == 0) {
+        let newMatrix = this.matrix[0].map((col, i) => this.matrix.map(row => row[i]));
+        if (this.collide(this.x, this.y, newMatrix) == 0) {
             this.matrix = newMatrix;
         }
     }

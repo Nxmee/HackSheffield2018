@@ -1,9 +1,15 @@
-let p1,p2,game,time
+let p1,p2,game,time,arena
 
 function setup() {
     createCanvas(240, 400);
+    arena = new Array(TILES_HIGH / TILES_WIDE);
+    for (let i = 0; i < arena.length; i++) {
+        arena[i] = new Array(TILES_HIGH / TILES_WIDE).fill(0);
+    }
     p1 = new Player();
     p2 = new Player();
+    p1.newPiece();
+    p2.newPiece();
     game = new Tetris(p1,p2);
 }
 

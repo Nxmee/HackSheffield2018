@@ -1,45 +1,45 @@
 window.TILES_HIGH = 20;
 window.TILES_WIDE = 10;
-
 function Tetris() {
-    this.drawMatrix = function(matrix, offset) {
-        for (let y = 0; y < matrix.length; y++) {
-            for (let x = 0; x < matrix[y].length; x++) {
-                if (matrix[y][x] != 0) {
-                    noStroke();
-                    fill(colors[matrix[y][x] - 1]);
-                    rect((x + offset[0]) * edge, (y + offset[1]) * edge, edge, edge);
-                }
-            }
-        }
-    }
+    this.leftBoard = new Board(color(255));
+    this.rightBoard = new Board(color(0));
+    this.p1 = new Player(this.leftBoard);
+    this.p2 = new Player(this.rightBoard);
+    this.TILE_SIZE;
+    let lastDrop = millis();
 
-    this.mergeMatrices = function(arena, piece) {
-        for (let y = 0; y < piece.matrix.length; y++) {
-            for (let x = 0; x < piece.matrix[y].length; x++) {
-                if (piece.matrix[y][x] != 0) {
-                    arena[y + piece.y][x + piece.x] = piece.matrix[y][x];
-                }
-            }
-        }
-    }
+    this.render = function() {
+        blendMode(BLEND);
+        background(180);
+        noStroke();
+        //render each side
 
-    function arenaSweep() {
-        let rowCount = 1;
-        for (let y = 0; y < arena.length; y++) {
-            let full = 1;
-            for (let x = 0; x < arena[y].length; x++) {
-                if (arena[y][x] == 0) {
-                    full = 0;
-                    break;
-                }
-            }
-            if (full != 1) continue;
-            arena.splice(y, 1);
-            arena.unshift(new Array(width / edge).fill(0));
+        //render Boards
+        this.leftBoard.render();
+        this.rightBoard.render();
 
-            player.score += 10 * rowCount;
-            rowCount *= 2;
+        //render Players
+        this.p1.render(this.TILE_SIZE);
+        this.p2.render(this.TILE_SIZE);
+    };
+
+    this.process = function() {
+        let now = millis();
+        if (now-lastDrop>1000){
+            lastDrop = now;
+            this.p1.gravity();
+            this.p2.gravity();
         }
-    }
+    };
+
+    this.updateSize = function(){
+        let TILE_SIZE = Math.min((width/2)/TILES_WIDE, height/TILES_HIGH);
+        let boardWidth = TILE_SIZE*TILES_WIDE;
+        let boardHeight = TILE_SIZE*TILES_HIGH;
+        let boardHeightOffset = height/2-boardHeight/2;
+        this.leftBoard.updateSize(width/2-boardWidth,boardHeightOffset,boardWidth,boardHeight);
+        this.rightBoard.updateSize(width/2,boardHeightOffset,boardWidth,boardHeight);
+        this.TILE_SIZE = TILE_SIZE;
+    };
+    this.updateSize();
 }

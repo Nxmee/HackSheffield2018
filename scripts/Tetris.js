@@ -1,4 +1,4 @@
-window.TILES_HIGH = 20;
+window.TILES_HIGH = 40;
 window.TILES_WIDE = 10;
 function Tetris() {
     this.leftBoard = new Board(color(255));
@@ -25,7 +25,7 @@ function Tetris() {
 
     this.process = function() {
         let now = millis();
-        if (now-lastDrop>500){
+        if (now-lastDrop>200){
             lastDrop = now;
             this.p1.gravity();
             this.p2.gravity();

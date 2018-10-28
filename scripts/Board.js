@@ -78,6 +78,8 @@ function Board(color) {
                 }
             }
         }
+        this.removeFilledLines();
+
         piece.owner.pieces.splice(piece.owner.pieces.indexOf(piece),1);
         if (piece.owner.pieces.length == 0) {
             piece.owner.newPiece();
@@ -91,39 +93,51 @@ function Board(color) {
 
     }
 
-    this.removeFilledLines = function(owner) {
-        if (owner.direction > 0) {
-            for (let y = 0; y < TILES_HIGH; y++) {
-                let isComplete = true;
-                for (let x = 0;x< TILES_WIDE;x++) {
-                    if (this.board[y][x] == null) {
-                        isComplete = false;
+    this.removeFilledLines = function() {
+        if (this.COLOR == 255) {
+            do {
+                var clearLine = true;
+                for (let y = TILES_HIGH / 2-1; y >= 0; y--) {
+                    let numComplete = 0;
+                    for (let x = 0; x < TILES_WIDE; x++) {
+                        if (this.board[y][x] != null) {
+                            numComplete++;
+                        }
+                    }
+                    if (numComplete < TILES_WIDE/2) {
+                        for (let yy = y-1;yy >=0;yy--) {
+                            this.board[yy + 1] = this.board[yy];
+                        }
+                        this.board[0] = new Array(TILES_WIDE);
+                        break;
+                    } else {
+                        clearLine = false;
                         break;
                     }
                 }
-                if (isComplete) {
-                    for (let yy = y - 1; yy >= 0; yy--) {
-                        this.board[yy + 1] = this.board[yy];
-                    }
-                    this.board[0] = new Array(TILES_WIDE);
-                }
-            }
+            } while (clearLine);
         } else {
-            for (let y = TILES_HIGH-1; y >= 0; y--) {
-                let isComplete = true;
-                for (let x = 0;x< TILES_WIDE;x++) {
-                    if (this.board[y][x] == null) {
-                        isComplete = false;
+            do {
+                var clearLine = true;
+                for (let y = TILES_HIGH / 2; y < TILES_HIGH; y++) {
+                    let numComplete = 0;
+                    for (let x = 0; x < TILES_WIDE; x++) {
+                        if (this.board[y][x] != null) {
+                            numComplete++;
+                        }
+                    }
+                    if (numComplete < TILES_WIDE/2) {
+                        for (let yy = y+1;yy< TILES_HIGH;yy++) {
+                            this.board[yy-1] = this.board[yy];
+                        }
+                        this.board[TILES_HIGH-1] = new Array(TILES_WIDE);
+                        break;
+                    } else {
+                        clearLine = false;
                         break;
                     }
                 }
-                if (isComplete) {
-                    for (let yy = y + 1; yy < TILES_HIGH; yy++) {
-                        this.board[yy - 1] = this.board[yy];
-                    }
-                    this.board[TILES_HIGH-1] = new Array(TILES_WIDE);
-                }
-            }
+            } while (clearLine);
         }
     }
 }

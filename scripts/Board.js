@@ -34,7 +34,7 @@ function Board(color) {
                 }
             }
         }
-        fill(180);
+        fill(20);
         if (this.COLOR == 0) {
             rect(this.x, this.y + this.boardHeight / 2 - TILE_SIZE, this.boardWidth, TILE_SIZE);
         } else {

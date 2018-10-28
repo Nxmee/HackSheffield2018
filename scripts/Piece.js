@@ -219,4 +219,23 @@ function Piece(owner, board) {
             }
         }
     }
+
+    this.onBoard = function () {
+
+      for (let itY = 0; itY < shapes.length; itY++) {
+        console.log(this.y + itY);
+        for (let itX = 0; itX < shapes[itY].length; itX++) {
+          if (shapes[itY][itX] != 0) {
+            console.log("Yes!");
+            if (this.y + itY < 0 || this.y + itY > TILES_HIGH) {
+              console.log("Nope!")
+              return false
+            }
+
+          }
+        }
+
+      }
+      return true
+    }
 }

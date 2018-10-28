@@ -27,7 +27,9 @@ function Player(b,d) {
     };
 
     this.release = function () {
+      if (this.pieces[this.pieces.length - 1].onBoard()) {
         this.newPiece();
+      }
     };
 
     this.gravity = function () {

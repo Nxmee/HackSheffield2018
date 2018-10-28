@@ -15,7 +15,6 @@ function Player(b) {
 
     this.moveLeft = function () {
         if (this.pieces.length > 0) {
-            console.log(this.pieces);
             this.pieces[this.pieces.length - 1].moveLeft();
         }
     };
@@ -27,17 +26,13 @@ function Player(b) {
     };
 
     this.release = function () {
-        if (this.pieces.length > 0) {
-            this.newPiece();
-        }
+        this.newPiece();
     };
 
-    this.gravity = function(){
+    this.gravity = function () {
         if (this.pieces.length > 0) {
             this.pieces.forEach(function (piece) {
-                if (piece) {
-                    piece.gravity();
-                }
+                piece.gravity();
             })
         }
     };
@@ -47,10 +42,10 @@ function Player(b) {
     };
 
     this.render = function (TILE_SIZE) {
-        this.pieces.forEach(function(piece){
-            if (piece) {
+        if (this.pieces.length > 0) {
+            this.pieces.forEach(function (piece) {
                 piece.render(TILE_SIZE);
-            }
-        });
+            });
+        }
     }
 }

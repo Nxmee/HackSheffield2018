@@ -15,13 +15,13 @@ function Board(color) {
     this.render = function (TILE_SIZE) {
         fill(this.COLOR);
         rect(this.x, this.y, this.boardWidth, this.boardHeight);
-        fill(255-this.COLOR);
+        fill(255 - this.COLOR);
         for (let i = 0; i < this.board.length; i++) {
-          for (let j = 0; j < this.board[i].length; j++) {
-            if (this.board[i][j] != null) {
-              rect(this.x+(i*TILE_SIZE), this.y+(j*TILE_SIZE), TILE_SIZE, TILE_SIZE)
+            for (let j = 0; j < this.board[i].length; j++) {
+                if (this.board[i][j] != null) {
+                    rect(this.x + (i * TILE_SIZE), this.y + (j * TILE_SIZE), TILE_SIZE, TILE_SIZE)
+                }
             }
-          }
         }
     }
 
@@ -46,18 +46,18 @@ function Board(color) {
         }
     }
 
-    this.fixPiece = function(piece) {
-        for (let y = 0;y<piece.matrix.length;y++){
-            let row = piece.matrix[y];
-            for (let x=0;x<row.length;x++){
+    this.fixPiece = function (piece) {
+        for (let y = 0; y < piece.matrix().length; y++) {
+            let row = piece.matrix()[y];
+            for (let x = 0; x < row.length; x++) {
                 let cell = row[x];
-                let cellX = piece.x+x;
-                let cellY = piece.y+y;
-                if (cell && (cellX >=0 && cellX < TILES_WIDE && cellY>=0 && cellY<TILES_HIGH)){
+                let cellX = piece.x + x;
+                let cellY = piece.y + y;
+                if (cell && (cellX >= 0 && cellX < TILES_WIDE && cellY >= 0 && cellY < TILES_HIGH)) {
                     this.board[cellX][cellY] = cell;
                 }
             }
         }
-        piece.owner.pieces.splice(piece.owner.pieces.indexOf(piece));
+        piece.owner.pieces.splice(piece.owner.pieces.indexOf(piece),1);
     }
 }

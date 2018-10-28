@@ -169,14 +169,14 @@ function Piece(owner) {
     }
 
     this.rotate = function () {
-        let newIndex = (shapeIndex+1) % shapes.length;
+        let newIndex = (shapeIndex + 1) % shapes.length;
 
         if (this.collide(this.x, this.y, shapes[newIndex]) == 0) {
             shapeIndex = newIndex;
         }
     };
 
-    this.matrix = function(){
+    this.matrix = function () {
         return shapes[shapeIndex];
     }
 
@@ -200,16 +200,21 @@ function Piece(owner) {
             this.y++;
         } else if (collisionState == 1) {
             this.owner.board.fixPiece(this);
-            this.owner.newPiece();
+            if (this.owner.pieces.length == 0) {
+                this.owner.newPiece();
+            }
         } else if (collisionState == 3) {
             console.log("Game Over");
             this.owner.board.fixPiece(this);
+            if (this.owner.pieces.length == 0) {
+                this.owner.newPiece();
+            }
         }
     }
 
     this.render = function (TILE_SIZE) {
         let COLOR = this.owner.board.COLOR;
-        fill(255-COLOR);
+        fill(255 - COLOR);
         let pieceX = this.owner.board.x + this.x * TILE_SIZE;
         let pieceY = this.owner.board.y + this.y * TILE_SIZE;
         let matrix = this.matrix();

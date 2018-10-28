@@ -1,4 +1,4 @@
-let p1,p2,game
+let p1, p2, game
 
 function setup() {
     createCanvas(windowWidth, windowHeight);

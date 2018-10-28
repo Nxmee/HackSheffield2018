@@ -1,10 +1,11 @@
-function Player(b) {
+function Player(b,d) {
     this.score = 0;
-    this.pieces = [new Piece(this)];
     this.board = b;
+    this.direction = d;
+    this.pieces = [new Piece(this,b)];
 
     this.newPiece = function () {
-        this.pieces.push(new Piece(this));
+        this.pieces.push(new Piece(this, this.board));
     };
 
     this.rotate = function () {

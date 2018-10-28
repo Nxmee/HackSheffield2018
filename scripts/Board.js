@@ -7,19 +7,19 @@ function Board(color) {
     this.boardWidth;
     this.boardHeight;
 
-    this.board = new Array(TILES_WIDE);
-    for (let i = 0; i < TILES_WIDE; i++) {
-        this.board[i] = new Array(TILES_HIGH);
+    this.board = new Array(TILES_HIGH);
+    for (let i = 0; i < TILES_HIGH; i++) {
+        this.board[i] = new Array(TILES_WIDE);
     }
 
     this.render = function (TILE_SIZE) {
         fill(this.COLOR);
         rect(this.x, this.y, this.boardWidth, this.boardHeight);
         fill(255 - this.COLOR);
-        for (let i = 0; i < this.board.length; i++) {
-            for (let j = 0; j < this.board[i].length; j++) {
-                if (this.board[i][j] != null) {
-                    rect(this.x + (i * TILE_SIZE), this.y + (j * TILE_SIZE), TILE_SIZE, TILE_SIZE)
+        for (let y = 0; y < this.board.length; y++) {
+            for (let x = 0; x < this.board[x].length; x++) {
+                if (this.board[y][x] != null) {
+                    rect(this.x + (x * TILE_SIZE), this.y + (y * TILE_SIZE), TILE_SIZE, TILE_SIZE);
                 }
             }
         }
@@ -33,11 +33,11 @@ function Board(color) {
     }
 
     this.getCell = function (x, y) {
-        let col = this.board[x];
+        let col = this.board[y];
         if (col == undefined) {
             return null;
         } else {
-            let cell = col[y];
+            let cell = col[x];
             if (cell != undefined) {
                 return cell;
             } else {
@@ -54,10 +54,14 @@ function Board(color) {
                 let cellX = piece.x + x;
                 let cellY = piece.y + y;
                 if (cell && (cellX >= 0 && cellX < TILES_WIDE && cellY >= 0 && cellY < TILES_HIGH)) {
-                    this.board[cellX][cellY] = cell;
+                    this.board[cellY][cellX] = cell;
                 }
             }
         }
         piece.owner.pieces.splice(piece.owner.pieces.indexOf(piece),1);
+
+        if (piece.owner.pieces.length == 0) {
+            piece.owner.newPiece();
+        }
     }
 }

@@ -1,25 +1,25 @@
-function Piece(owner) {
+function Piece(owner, board) {
     this.x = TILES_WIDE / 2;
-    this.y = -4;
+    this.y = (owner.direction < 0) ? TILES_HIGH : -4;
     let shapeIndex = 0;
     let shapes = createMatrices(Math.floor(Math.random() * 7));
     this.owner = owner;
+    this.board = board;
 
     this.collide = function (newX, newY, matrix) {
         matrix = matrix != null ? matrix : this.matrix();
-        let board = this.owner.board;
         for (let y = 0; y < matrix.length; y++) {
             let row = matrix[y];
             for (let x = 0; x < row.length; x++) {
                 if (row[x] != 0) {
                     let tempX = newX + x;
                     let tempY = newY + y;
-                    let cell = board.getCell(tempX, tempY);
+                    let cell = this.board.getCell(tempX, tempY);
                     if (cell == 1) {
                         return 1; //Collision with cell
                     } else if (tempX < 0 || tempX >= TILES_WIDE) {
                         return 2; //Collision with wall
-                    } else if (tempY >= TILES_HIGH) {
+                    } else if ((owner.direction > 0) ? tempY >= TILES_HIGH : tempY <=-1) {
                         return 3; //hit the bottom/top -game over
                     }
                 }
@@ -182,41 +182,36 @@ function Piece(owner) {
 
     this.moveRight = function () {
         if (this.collide(this.x + 1, this.y) == 0) {
-            console.log("right");
             this.x++;
         }
     };
 
     this.moveLeft = function () {
         if (this.collide(this.x - 1, this.y) == 0) {
-            console.log("left");
             this.x--;
         }
     }
 
     this.gravity = function () {
-        let collisionState = this.collide(this.x, this.y + 1);
+        let collisionState = this.collide(this.x, this.y + this.owner.direction);
         if (collisionState == 0) {
-            this.y++;
+            this.y+=this.owner.direction;
         } else if (collisionState == 1) {
-            this.owner.board.fixPiece(this);
-            if (this.owner.pieces.length == 0) {
-                this.owner.newPiece();
-            }
+            this.board.fixPiece(this);
         } else if (collisionState == 3) {
             console.log("Game Over");
-            this.owner.board.fixPiece(this);
-            if (this.owner.pieces.length == 0) {
-                this.owner.newPiece();
-            }
+            this.board.fixPiece(this);
+        }
+        if (this.owner.direction < 0) {
+            console.log(this.y);
         }
     }
 
     this.render = function (TILE_SIZE) {
-        let COLOR = this.owner.board.COLOR;
+        let COLOR = this.board.COLOR;
         fill(255 - COLOR);
-        let pieceX = this.owner.board.x + this.x * TILE_SIZE;
-        let pieceY = this.owner.board.y + this.y * TILE_SIZE;
+        let pieceX = this.board.x + this.x * TILE_SIZE;
+        let pieceY = this.board.y + this.y * TILE_SIZE;
         let matrix = this.matrix();
         for (let y = 0; y < matrix.length; y++) {
             let row = matrix[y];

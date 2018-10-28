@@ -5,6 +5,8 @@ function Piece(owner, board) {
     let shapes = createMatrices(Math.floor(Math.random() * 7));
     this.owner = owner;
     this.board = board;
+    this.buildMode = true;
+    this.firstCollision = false;
 
     this.collide = function (newX, newY, matrix) {
         matrix = matrix != null ? matrix : this.matrix();
@@ -16,6 +18,16 @@ function Piece(owner, board) {
                     let tempY = newY + y;
                     let cell = this.board.getCell(tempX, tempY);
                     if (cell == 1) {
+                        if (this.buildMode == false) {
+                            if (this.firstCollision) {
+                                return 1;
+                            } else {
+                                this.firstCollision = true;
+                                return 0;
+                            }
+                        } else {
+                            return 1;
+                        }
                         return 1; //Collision with cell
                     } else if (tempX < 0 || tempX >= TILES_WIDE) {
                         return 2; //Collision with wall
@@ -194,7 +206,8 @@ function Piece(owner, board) {
 
     this.swap = function() {
         this.x = TILES_WIDE - this.x - this.matrix().length;
-        this.board = this.board==this.owner.buildBoard ? this.owner.destroyBoard : this.owner.buildBoard;
+        this.board = this.buildMode ? this.owner.destroyBoard : this.owner.buildBoard;
+        this.buildMode = !this.buildMode;
     }
 
     this.gravity = function () {

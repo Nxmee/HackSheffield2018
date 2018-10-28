@@ -34,11 +34,13 @@ function Board(color) {
                 }
             }
         }
-        fill(20);
-        if (this.COLOR == 0) {
-            rect(this.x, this.y + this.boardHeight / 2 - TILE_SIZE, this.boardWidth, TILE_SIZE);
-        } else {
-            rect(this.x,this.y+this.boardHeight/2,this.boardWidth,TILE_SIZE);
+        for (let y = 0;y<4;y++){
+            fill(80-y*20);
+            if (this.COLOR == 0) {
+                rect(this.x, this.y + this.boardHeight / 2 - TILE_SIZE - TILE_SIZE*y, this.boardWidth, TILE_SIZE);
+            } else {
+                rect(this.x,this.y+this.boardHeight/2 + TILE_SIZE*y,this.boardWidth,TILE_SIZE);
+            }
         }
     }
 
@@ -71,7 +73,7 @@ function Board(color) {
                 let cellX = piece.x + x;
                 let cellY = piece.y + y;
                 if (cell && (cellX >= 0 && cellX < TILES_WIDE && cellY >= 0 && cellY < TILES_HIGH)) {
-                    this.board[cellY][cellX] = cell;
+                    this.board[cellY][cellX] = piece.buildMode ? 1 : null;
                 }
             }
         }

@@ -230,7 +230,7 @@ function Piece(owner, board) {
             this.board.fixPiece(this);
         } else if (collisionState == 3) {
             console.log("Game Over");
-            this.board.fixPiece(this);
+            window.reset();
         }
     }
 

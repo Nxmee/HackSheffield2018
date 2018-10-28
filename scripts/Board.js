@@ -66,6 +66,7 @@ function Board(color) {
     }
 
     this.fixPiece = function (piece) {
+      if (piece.onBoard()) {
         for (let y = 0; y < piece.matrix().length; y++) {
             let row = piece.matrix()[y];
             for (let x = 0; x < row.length; x++) {
@@ -77,12 +78,16 @@ function Board(color) {
                 }
             }
         }
-        // this.removeFilledLines(piece.owner);
-
         piece.owner.pieces.splice(piece.owner.pieces.indexOf(piece),1);
         if (piece.owner.pieces.length == 0) {
             piece.owner.newPiece();
         }
+      }else {
+        console.log("Game Over");
+        window.reset();
+      }
+
+
 
     }
 

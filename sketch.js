@@ -1,5 +1,9 @@
 let p1, p2, game
 
+window.reset = function() {
+  game = new Tetris();
+}
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
     game = new Tetris();

@@ -45,10 +45,6 @@ function Player(b,d,dir) {
         }
     };
 
-    this.updateScore = function () {
-        document.getElementById("score").innerText = this.score;
-    };
-
     this.render = function (TILE_SIZE) {
         if (this.pieces.length > 0) {
             this.pieces.forEach(function (piece) {

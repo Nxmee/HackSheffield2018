@@ -8,7 +8,8 @@ function Piece(owner, board) {
     this.buildMode = true;
     this.firstCollision = false;
 
-    this.collide = function (newX, newY, matrix) {
+    this.collide = function (newX, newY, matrix, board) {
+        board = board != null ? board : this.board;
         matrix = matrix != null ? matrix : this.matrix();
         for (let y = 0; y < matrix.length; y++) {
             let row = matrix[y];
@@ -16,7 +17,7 @@ function Piece(owner, board) {
                 if (row[x] != 0) {
                     let tempX = newX + x;
                     let tempY = newY + y;
-                    let cell = this.board.getCell(tempX, tempY);
+                    let cell = board.getCell(tempX, tempY);
                     if (cell == 1) {
                         if (this.buildMode == false) {
                             if (this.firstCollision) {
@@ -31,8 +32,10 @@ function Piece(owner, board) {
                         return 1; //Collision with cell
                     } else if (tempX < 0 || tempX >= TILES_WIDE) {
                         return 2; //Collision with wall
-                    } else if ((owner.direction > 0) ? tempY >= TILES_HIGH : tempY <=-1) {
+                    } else if ((owner.direction > 0) ? tempY >= TILES_HIGH/2+1 : tempY <=TILES_HIGH/2-3) {
                         return 3; //hit the bottom/top -game over
+                    } else if ((owner.direction > 0) ? tempY >= TILES_HIGH/2 : tempY <= TILES_HIGH/2) {
+                        return 4; //inside the buffer zone cannot make a swap
                     }
                 }
             }
@@ -193,26 +196,35 @@ function Piece(owner, board) {
     }
 
     this.moveRight = function () {
-        if (this.collide(this.x + 1, this.y) == 0) {
+        let collisionState = this.collide(this.x + 1, this.y);
+        if (collisionState == 0 || collisionState == 4) {
             this.x++;
         }
     };
 
     this.moveLeft = function () {
-        if (this.collide(this.x - 1, this.y) == 0) {
+        let collisionState = this.collide(this.x - 1, this.y);
+        if (collisionState == 0 || collisionState == 4) {
             this.x--;
         }
     }
 
     this.swap = function() {
-        this.x = TILES_WIDE - this.x - this.matrix().length;
-        this.board = this.buildMode ? this.owner.destroyBoard : this.owner.buildBoard;
-        this.buildMode = !this.buildMode;
+        if (this.buildMode || this.collide(this.x,this.y)!=4) {
+            let newX = TILES_WIDE - this.x - this.matrix().length;
+            let newBoard = this.buildMode ? this.owner.destroyBoard : this.owner.buildBoard;
+
+            if (this.collide(newX,this.y,this.matrix(),newBoard) == 0) {
+                this.x = newX;
+                this.board = newBoard;
+                this.buildMode = !this.buildMode;
+            }
+        }
     }
 
     this.gravity = function () {
         let collisionState = this.collide(this.x, this.y + this.owner.direction);
-        if (collisionState == 0) {
+        if (collisionState == 0 || collisionState == 4) {
             this.y+=this.owner.direction;
         } else if (collisionState == 1) {
             this.board.fixPiece(this);

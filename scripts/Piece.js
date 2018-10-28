@@ -202,9 +202,6 @@ function Piece(owner, board) {
             console.log("Game Over");
             this.board.fixPiece(this);
         }
-        if (this.owner.direction < 0) {
-            console.log(this.y);
-        }
     }
 
     this.render = function (TILE_SIZE) {

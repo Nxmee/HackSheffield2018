@@ -17,7 +17,7 @@ function Board(color) {
         rect(this.x, this.y, this.boardWidth, this.boardHeight);
         fill(255 - this.COLOR);
         for (let y = 0; y < this.board.length; y++) {
-            for (let x = 0; x < this.board[x].length; x++) {
+            for (let x = 0; x < this.board[y].length; x++) {
                 if (this.board[y][x] != null) {
                     rect(this.x + (x * TILE_SIZE), this.y + (y * TILE_SIZE), TILE_SIZE, TILE_SIZE);
                 }
@@ -58,10 +58,48 @@ function Board(color) {
                 }
             }
         }
-        piece.owner.pieces.splice(piece.owner.pieces.indexOf(piece),1);
+        this.removeFilledLines(piece.owner);
 
+        piece.owner.pieces.splice(piece.owner.pieces.indexOf(piece),1);
         if (piece.owner.pieces.length == 0) {
             piece.owner.newPiece();
+        }
+
+    }
+
+    this.removeFilledLines = function(owner) {
+        if (owner.direction > 0) {
+            for (let y = 0; y < TILES_HIGH; y++) {
+                let isComplete = true;
+                for (let x = 0;x< TILES_WIDE;x++) {
+                    if (this.board[y][x] == null) {
+                        isComplete = false;
+                        break;
+                    }
+                }
+                if (isComplete) {
+                    for (let yy = y - 1; yy >= 0; yy--) {
+                        this.board[yy + 1] = this.board[yy];
+                    }
+                    this.board[0] = new Array(TILES_WIDE);
+                }
+            }
+        } else {
+            for (let y = TILES_HIGH-1; y >= 0; y--) {
+                let isComplete = true;
+                for (let x = 0;x< TILES_WIDE;x++) {
+                    if (this.board[y][x] == null) {
+                        isComplete = false;
+                        break;
+                    }
+                }
+                if (isComplete) {
+                    for (let yy = y + 1; yy < TILES_HIGH; yy++) {
+                        this.board[yy - 1] = this.board[yy];
+                    }
+                    this.board[TILES_HIGH-1] = new Array(TILES_WIDE);
+                }
+            }
         }
     }
 }

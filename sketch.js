@@ -42,5 +42,11 @@ function keyPressed() {
         case 83: //S
             game.p1.release();
             break;
+        case 81: //q
+            game.p1.swap();
+            break;
+        case 16: //Right shift
+            game.p2.swap();
+            break;
     }
 }

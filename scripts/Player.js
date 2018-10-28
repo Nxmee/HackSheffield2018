@@ -1,7 +1,8 @@
-function Player(b,d) {
+function Player(b,d,dir) {
     this.score = 0;
     this.buildBoard = b;
-    this.direction = d;
+    this.destroyBoard = d;
+    this.direction = dir;
     this.pieces = [new Piece(this,b)];
 
     this.newPiece = function () {
@@ -31,6 +32,10 @@ function Player(b,d) {
         this.newPiece();
       }
     };
+
+    this.swap = function() {
+        this.pieces[this.pieces.length-1].swap();
+    }
 
     this.gravity = function () {
         if (this.pieces.length > 0) {

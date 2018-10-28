@@ -192,6 +192,11 @@ function Piece(owner, board) {
         }
     }
 
+    this.swap = function() {
+        this.x = TILES_WIDE - this.x - this.matrix().length;
+        this.board = this.board==this.owner.buildBoard ? this.owner.destroyBoard : this.owner.buildBoard;
+    }
+
     this.gravity = function () {
         let collisionState = this.collide(this.x, this.y + this.owner.direction);
         if (collisionState == 0) {

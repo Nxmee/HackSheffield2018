@@ -1,4 +1,4 @@
-window.TILES_HIGH = 40;
+window.TILES_HIGH = 46;
 window.TILES_WIDE = 10;
 
 //Building section black-background
@@ -7,8 +7,8 @@ window.TILES_WIDE = 10;
 function Tetris() {
     this.leftBoard = new Board(255);
     this.rightBoard = new Board(0);
-    this.p1 = new Player(this.leftBoard,1);
-    this.p2 = new Player(this.rightBoard,-1);
+    this.p1 = new Player(this.leftBoard,this.rightBoard,1);
+    this.p2 = new Player(this.rightBoard,this.leftBoard,-1);
     this.TILE_SIZE;
     let lastDrop = millis();
 

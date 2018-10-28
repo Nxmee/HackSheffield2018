@@ -1,7 +1,7 @@
 function Board(color) {
     this.COLOR = color;
 
-    //store the initial board dimensions
+    //store the initial buildBoard dimensions
     this.x;
     this.y;
     this.boardWidth;
@@ -11,17 +11,34 @@ function Board(color) {
     for (let i = 0; i < TILES_HIGH; i++) {
         this.board[i] = new Array(TILES_WIDE);
     }
+    if (this.COLOR == 0) {
+        for (let y = TILES_HIGH/2;y<TILES_HIGH/2+3;y++){
+            this.board[y] = this.board[y].fill(1,0,TILES_WIDE);
+        }
+    } else {
+        for (let y = TILES_HIGH/2-3;y<TILES_HIGH/2;y++){
+            this.board[y] = this.board[y].fill(1,0,TILES_WIDE);
+        }
+    }
 
     this.render = function (TILE_SIZE) {
         fill(this.COLOR);
-        rect(this.x, this.y, this.boardWidth, this.boardHeight);
+        rect(this.x, this.y, this.boardWidth, this.boardHeight/2);
         fill(255 - this.COLOR);
+        rect(this.x, this.y+this.boardHeight/2,this.boardWidth,this.boardHeight/2);
+        fill(0);
         for (let y = 0; y < this.board.length; y++) {
             for (let x = 0; x < this.board[y].length; x++) {
                 if (this.board[y][x] != null) {
                     rect(this.x + (x * TILE_SIZE), this.y + (y * TILE_SIZE), TILE_SIZE, TILE_SIZE);
                 }
             }
+        }
+        fill(180);
+        if (this.COLOR == 0) {
+            rect(this.x, this.y + this.boardHeight / 2 - TILE_SIZE, this.boardWidth, TILE_SIZE);
+        } else {
+            rect(this.x,this.y+this.boardHeight/2,this.boardWidth,TILE_SIZE);
         }
     }
 
@@ -58,7 +75,7 @@ function Board(color) {
                 }
             }
         }
-        this.removeFilledLines(piece.owner);
+        // this.removeFilledLines(piece.owner);
 
         piece.owner.pieces.splice(piece.owner.pieces.indexOf(piece),1);
         if (piece.owner.pieces.length == 0) {

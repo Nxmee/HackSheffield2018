@@ -1,6 +1,9 @@
 window.TILES_HIGH = 40;
 window.TILES_WIDE = 10;
 
+//Building section black-background
+//Destroying section white-blackground
+
 function Tetris() {
     this.leftBoard = new Board(255);
     this.rightBoard = new Board(0);

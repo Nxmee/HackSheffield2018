@@ -205,7 +205,7 @@ function Piece(owner, board) {
     }
 
     this.render = function (TILE_SIZE) {
-        let COLOR = this.board.COLOR;
+        let COLOR = this.board == this.owner.buildBoard ? 255 : 0;
         fill(255 - COLOR);
         let pieceX = this.board.x + this.x * TILE_SIZE;
         let pieceY = this.board.y + this.y * TILE_SIZE;
